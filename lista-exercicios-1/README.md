@@ -7,7 +7,7 @@ O arquivo `solucao.js` contém as soluções dos exercícios propostos agrupadas
 > `...`  
 > `// questao1();`  
 > `// questao2();`  
-> `...`
+> `...`  
 Para executar uma função específica basta retirar o comentário do comando que invoca a função, apagando o trecho `//` antes do comando desejado.
 ## Pré-requisitos
 * [Node.js](https://nodejs.org/en/download) instalado na máquina;
