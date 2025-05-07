@@ -169,7 +169,7 @@ function questao8() {
  * utilizando um loop for.
  */
 function questao9() {
-    for (contagem = 10; contagem > 0; contagem--) {
+    for (let contagem = 10; contagem > 0; contagem--) {
         console.log(contagem);
     }
 }
@@ -180,7 +180,7 @@ function questao9() {
 function questao10() {
     let numero = Number(input("Informe um número: "));
     
-    for (i = 0; i < 10; i++) {
+    for (let i = 0; i < 10; i++) {
         console.log(numero);
     }
 }
@@ -192,7 +192,7 @@ function questao11() {
     let numero = 0;
     let somaNumeros = 0;
     
-    for (i = 0; i < 5; i++) {
+    for (let i = 0; i < 5; i++) {
         numero = Number(input("Informe um número: "));
         somaNumeros += numero;
     }
@@ -206,7 +206,7 @@ function questao11() {
  function questao12() {
     let numero = Number(input("Informe um número: "));
 
-    for (i = 1; i < 11; i++) {
+    for (let i = 1; i < 11; i++) {
         console.log(
             numero,"+", i,"=", numero + i,"\t",
             numero,"-", i,"=", numero - i,"\t",
@@ -265,7 +265,7 @@ function questao15() {
     
     console.log(penultimo);
     console.log(ultimo);
-    for (i = 2; i < 10; i++) {
+    for (let i = 2; i < 10; i++) {
         atual = ultimo + penultimo;
         console.log(atual);
         penultimo = ultimo;
