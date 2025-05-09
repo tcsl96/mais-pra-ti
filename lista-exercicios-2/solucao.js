@@ -5,8 +5,8 @@ const input = require("prompt-sync")();
 /**
  * 1. Escreva um programa para calcular a redução do tempo de vida de um fumante.
  * Pergunte a quantidade de cigarros fumados por dias e quantos anos ele já fumou.
- * Considere que um fumante perde 10 min de vida a cada cigarro. Calcule quantos dias de
- * vida um fumante perderá e exiba o total em dias.
+ * Considere que um fumante perde 10 min de vida a cada cigarro.
+ * Calcule quantos dias de vida um fumante perderá e exiba o total em dias.
  */
 function questao1() {
     let tempoFumanteAnos = Number(input("Há quantos anos você fuma? "));
@@ -15,21 +15,22 @@ function questao1() {
     let totalCigarros = tempoFumanteAnos * 365 * cigarrosPorDia;
     let tempoPerdidoDias = totalCigarros * 10 / (24 * 60);
 
-    console.log("O cigarro já custou", tempoPerdidoDias, "dias da sua vida.\nPare de fumar.");
+    console.log("O cigarro já custou", tempoPerdidoDias.toFixed(2), "dias da sua vida.\nPare de fumar.");
 }
 
 /**
- * 2. Escreva um programa que pergunte a velocidade de um carro. Caso ultrapasse 80 Km/h,
- * exiba uma mensagem dizendo que o usuário foi multado. Nesse caso, exiba o valor da
- * multa, cobrando R$ 5,00 por cada Km acima da velocidade permitida.
+ * 2. Escreva um programa que pergunte a velocidade de um carro.
+ * Caso ultrapasse 80 Km/h, exiba uma mensagem dizendo que o usuário foi multado.
+ * Nesse caso, exiba o valor da multa, cobrando R$ 5,00 por cada Km acima da velocidade permitida.
  */
 function questao2() {
-    let velocidade = Number(input("Informe a velocidade do carro em Km/h: "));
+    let velocidade = Number(input("Qual a velocidade do carro em Km/h? "));
     let valorInfracao = 5;
+    let valorMulta = 0;
 
     if (velocidade > 80) {
-        let valorMulta = (velocidade - 80) * valorInfracao;
-        console.log("O carro está acima da velocidade permitida.\nSerá aplicada uma multa de", valorMulta, "R$.");
+        valorMulta = (velocidade - 80) * valorInfracao;
+        console.log("O carro está acima da velocidade permitida.\nSerá aplicada uma multa de R$", valorMulta, "reais.");
     } else {
         console.log("O carro está dentro do limite de velocidade.");
     }
@@ -41,22 +42,23 @@ function questao2() {
  * R$ 0.45 para viagens mais longas.
  */
 function questao3() {
-    let distancia = Number(input("Informe a distância da corrida em Km: "));
+    let distancia = Number(input("Qual a distância da corrida em Km? "));
+    let precoQuilometro = 0.5;
     let precoPassagem = 0;
 
     if (distancia > 200) {
-        precoPassagem = distancia * 0.45;
-    } else {
-        precoPassagem = distancia * 0.5;
+        precoQuilometro = 0.45;
     }
+
+    precoPassagem = distancia * precoQuilometro;
     console.log("O preço da passagem é:",precoPassagem);
 }
 
 /** 
- * 4. Crie um programa que leia o tamanho de três segmentos de reta. Analise seus
- * comprimentos e diga se é possível formar um triângulo com essas retas.
- * Matematicamente, para três segmentos formarem um triângulo, o comprimento de cada
- * lado deve ser menor que a soma dos outros dois.
+ * 4. Crie um programa que leia o tamanho de três segmentos de reta.
+ * Analise seus comprimentos e diga se é possível formar um triângulo com essas retas.
+ * Matematicamente, para três segmentos formarem um triângulo,
+ * o comprimento de cada lado deve ser menor que a soma dos outros dois.
  */
 function questao4() {
     console.log("Informe os valores dos lados de um triângulo.");
@@ -67,27 +69,79 @@ function questao4() {
     if (!((ladoA < (ladoB + ladoC)) && (ladoB < (ladoA + ladoC)) && (ladoC < (ladoA + ladoB)))) {
         console.log("Os lados não formam um triângulo.");
     } else {
-        console.log("Os lados formam um triãngulo.");
+        console.log("Os lados formam um triângulo.");
     }
 }
 
 /**
  * 5. Crie um jogo de JoKenPo (Pedra-Papel-Tesoura).
  */
-function questao5() {}
+function questao5() {
+    const opcoes = ["Pedra", "Papel", "Tesoura"];
+    let escolhaComputador = 0;
+    let escolhaUsuario = 0;
+    let continuar = 0;
+    let temp = 0;
+
+    while (true) {
+        console.log("1 - Pedra\t2 - Papel\t3 - Tesoura");
+        escolhaUsuario = Number(input("Escolha uma opção: "));
+        if (escolhaUsuario < 1 || escolhaUsuario > 3) {
+            console.log("Opção inválida!");
+            continue;
+        }
+
+        escolhaComputador = Math.floor(Math.random() * 3 + 1);
+        console.log(
+            "Jo...\tKen...\tPo!\n",
+            "Sua escolha:", opcoes[escolhaUsuario - 1],
+            "\tEscolha do computador:", opcoes[escolhaComputador - 1]
+        );
+        if ((escolhaUsuario == 1 && escolhaComputador == 3) ||
+            (escolhaUsuario == 3 && escolhaComputador == 1)) {
+            temp = escolhaUsuario;
+            escolhaUsuario = escolhaComputador;
+            escolhaComputador = temp;
+        }
+        if (escolhaUsuario > escolhaComputador) {
+            console.log("Parabéns, você ganhou!");
+        } else if (escolhaUsuario == escolhaComputador) {
+            console.log("Você empatou com o computador.");
+        } else {
+            console.log("Que pena, você perdeu.");
+        }
+
+        console.log("\nDeseja jogar novamente?\n1 - Sim\nQualquer outra tecla - Não");
+        continuar = Number(input("Opção: "));
+        if (continuar == 1) {
+            continue;
+        }
+        break;
+    }
+}
 
 /**
- * 6. Crie um jogo onde o computador vai sortear um número entre 1 e 5. O jogador vai
- * tentar descobrir qual foi o valor sorteado.
+ * 6. Crie um jogo onde o computador vai sortear um número entre 1 e 5.
+ * O jogador vai tentar descobrir qual foi o valor sorteado.
  */
-function questao6() {}
+function questao6() {
+    let numeroSorteado = Math.floor(Math.random() * 5 + 1);
+    let escolha = Number(input("Um número entre 1 e 5 foi sorteado, qual número você acha que é? "));
+
+    if (escolha == numeroSorteado) {
+        console.log("Parabéns, você acertou!");
+    } else {
+        console.log("Que pena, você errou.\nO número sorteado foi:", numeroSorteado);
+    }
+}
 
 /**
- * 7. Uma empresa de aluguel de carros precisa cobrar pelos seus serviços. O aluguel de um
- * carro popular custa R$ 90,00 por dia e um carro de luxo custa R$ 150,00. Além disso, o
- * cliente paga por Km percorrido. Faça um programa que leia o tipo de carro alugado
- * (popular ou luxo), quantos dias de aluguel e quantos Km foram percorridos. No final,
- * mostre o preço a ser pago de acordo com os dados a seguir:
+ * 7. Uma empresa de aluguel de carros precisa cobrar pelos seus serviços.
+ * O aluguel de um carro popular custa R$ 90,00 por dia e um carro de luxo custa R$ 150,00.
+ * Além disso, o cliente paga por Km percorrido.
+ * Faça um programa que leia o tipo de carro alugado (popular ou luxo),
+ * quantos dias de aluguel e quantos Km foram percorridos.
+ * No final, mostre o preço a ser pago de acordo com os dados a seguir:
  * Carros populares
  * - Até 100 Km percorridos: R$ 0,20 por Km
  * - Acima de 100 Km percorridos: R$ 0,10 por Km
@@ -95,12 +149,40 @@ function questao6() {}
  * - Até 200 Km percorridos: R$ 0,30 por Km
  * - Acima de 200 Km percorridos: R$ 0,25 por Km
  */
-function questao7() {}
+function questao7() {
+    console.log("Qual o tipo de carro alugado?\n1 - Carro popular\t2 - Carro de luxo");
+    let tipoCarro = Number(input("Opção: "));
+    let diasAluguel = Number(input("Qual a quantidade de dias de aluguel? "));
+    let distanciaPercorrida = Number(input("Qual a distância percorrida pelo carro em Km? "));
+    let diariaAluguel = 0;
+    let precoQuilometro = 0;
+    let valorAluguel = 0;
+
+    if (tipoCarro == 1) {
+        diariaAluguel = 90;
+        if (distanciaPercorrida <= 100) {
+            precoQuilometro = 0.2;
+        } else {
+            precoQuilometro = 0.1;
+        }
+    } else {
+        diariaAluguel = 150;
+        if (distanciaPercorrida <= 200) {
+            precoQuilometro = 0.3;
+        } else {
+            precoQuilometro = 0.25;
+        }
+    }
+
+    valorAluguel = diasAluguel * diariaAluguel + distanciaPercorrida * precoQuilometro;
+    console.log("O valor do aluguel é:", valorAluguel);
+
+}
 
 /**
  * 8. Um programa de vida saudável quer dar pontos por atividades físicas realizadas que
- * podem ser trocados por dinheiro. Cada hora de atividade física no mês vale pontos. O
- * sistema funciona assim:
+ * podem ser trocados por dinheiro. Cada hora de atividade física no mês vale pontos.
+ * O sistema funciona assim:
  * - até 10 h de atividade no mês: ganha 2 pontos por hora
  * - de 10 h até 20 h de atividade no mês: ganha 5 pontos por hora
  * - acima de 20 h de atividade no mês: ganha 10 pontos por hora
@@ -108,15 +190,59 @@ function questao7() {}
  * Faça um programa que leia quantas horas de atividade uma pessoa teve por mês.
  * Calcule e mostre quantos pontos ela teve e quanto dinheiro ela conseguiu ganhar.
  */
-function questao8() {}
+function questao8() {
+    let horasAtividade = Number(input("Quantas horas de atividade física você realizou nesse mês? "));
+    let pontosHora = 0;
+    let faturamento = 0;
+
+    if (horasAtividade <= 10) {
+        pontosHora = 2;
+    } else if (horasAtividade <= 20) {
+        pontosHora = 5;
+    } else {
+        pontosHora = 10;
+    }
+
+    faturamento = horasAtividade * pontosHora * 0.05;
+    console.log("Graças ao seu esforço, você faturou R$", faturamento, "reais.\nContinue assim.");
+}
 
 /**
- * 9. Desenvolva um aplicativo que leia o salário e o sexo de vários funcionários. No final,
- * mostre o total de salário pago aos homens e o total pago às mulheres. O programa vai
- * perguntar ao usuário se ele quer continuar ou não sempre que ler os dados de um
- * funcionário.
+ * 9. Desenvolva um aplicativo que leia o salário e o sexo de vários funcionários.
+ * No final, mostre o total de salário pago aos homens e o total pago às mulheres.
+ * O programa vai perguntar ao usuário se ele quer continuar ou
+ * não sempre que ler os dados de um funcionário.
  */
-function questao9() {}
+function questao9() {
+    let salario = 0;
+    let sexo = 0;
+    let salarioHomens = 0;
+    let salarioMulheres = 0;
+    let continuar = 0;
+
+    while (true) {
+        salario = Number(input("Informe o salário de um funcionário: "));
+        console.log("Qual o sexo desse funcionário?\n1 - Masculino\t2 - Feminino");
+        sexo = Number(input("Opção: "));
+        
+        if (sexo == 1) {
+            salarioHomens += salario;
+        } else {
+            salarioMulheres += salario;
+        }
+        
+        console.log("Deseja continuar?\n1 - Sim\t2 - Não");
+        continuar = Number(input("Opção: "));
+        if (continuar == 2) {
+            break;
+        }
+    }
+
+    console.log(
+        "O total de salário pago aos homens é:", salarioHomens,
+        "\nO total de salário pago às mulheres é:", salarioMulheres
+    );
+}
 
 /**
  * 10. Crie um programa usando a estrutura “faça enquanto” que leia vários números. A
@@ -126,14 +252,62 @@ function questao9() {}
  * c) A média entre todos os valores;
  * d) Quantos valores são pares.
  */
-function questao10() {}
+function questao10() {
+    let numero = 0;
+    let somaNumeros = 0;
+    let menorNumero;
+    let mediaNumeros = 0;
+    let numerosPares = 0;
+    let continuar = 0;
+
+    let i = 0;
+    do {
+        numero = Number(input("Informe um número: "));
+        somaNumeros += numero;
+        if (menorNumero === undefined) {
+            menorNumero = numero;
+        } else {
+            if (numero < menorNumero) {
+                menorNumero = numero;
+            }
+        }
+        if (numero % 2 == 0) {
+            numerosPares++;
+        }
+        i++;
+
+        console.log("Deseja continuar?\n1 - Sim\n2 - Não");
+        continuar = Number(input("Opção: "));
+    } while (continuar == 1)
+    mediaNumeros = somaNumeros / i;
+    
+    console.log(
+        "a) A soma dos números informados é:", somaNumeros +
+        "\nb) O menor número informado é:", menorNumero +
+        "\nc) A média dos números informados é:", mediaNumeros +
+        "\nd) A quantidade de números pares é:", numerosPares
+    );
+}
 
 /**
  * 11. Desenvolva um programa que leia o primeiro termo e a razão de uma PA (Progressão
  * Aritmética), mostrando na tela os 10 primeiros elementos da PA e a soma entre todos os
  * valores da sequência.
  */
-function questao11() {}
+function questao11() {
+    const primeiroTermo = Number(input("Informe o primeiro termo da PA: "));
+    let razao = Number(input("Informe a razão da PA: "));
+    let proximoTermo = primeiroTermo;
+    let somaTermos = 0;
+    
+    console.log("Os 10 primeiros termos da PA são:");
+    for (let i = 1; i < 11; i++) {
+        console.log("Termo", i, "=", proximoTermo);
+        somaTermos += proximoTermo;
+        proximoTermo += razao;
+    }
+    console.log("A soma dos 10 primeiros termos é:", somaTermos);
+}
 
 /**
  * 12. Faça um programa que mostre os 10 primeiros elementos da Sequência de Fibonacci.
@@ -506,7 +680,7 @@ function questao50() {}
 // questao7();
 // questao8();
 // questao9();
-// questao10();
+questao10();
 // questao11();
 // questao12();
 // questao13();
