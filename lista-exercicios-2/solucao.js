@@ -1,5 +1,6 @@
 // npm install prompt-sync
 const input = require("prompt-sync")();
+const ordenacao = require("../algoritmos/ordenacao");
 
 
 /**
@@ -30,7 +31,10 @@ function questao2() {
 
     if (velocidade > 80) {
         valorMulta = (velocidade - 80) * valorInfracao;
-        console.log("O carro está acima da velocidade permitida.\nSerá aplicada uma multa de R$", valorMulta, "reais.");
+        console.log(
+            "O carro está acima da velocidade permitida.\n", 
+            `Será aplicada uma multa de R$${valorMulta} reais.`
+        );
     } else {
         console.log("O carro está dentro do limite de velocidade.");
     }
@@ -51,7 +55,7 @@ function questao3() {
     }
 
     precoPassagem = distancia * precoQuilometro;
-    console.log("O preço da passagem é:",precoPassagem);
+    console.log("O preço da passagem é:", precoPassagem);
 }
 
 /** 
@@ -111,7 +115,7 @@ function questao5() {
             console.log("Que pena, você perdeu.");
         }
 
-        console.log("\nDeseja jogar novamente?\n1 - Sim\nQualquer outra tecla - Não");
+        console.log("\nDeseja jogar novamente?\n1 - Sim\tQualquer outra tecla - Não");
         continuar = Number(input("Opção: "));
         if (continuar == 1) {
             continue;
@@ -204,7 +208,7 @@ function questao8() {
     }
 
     faturamento = horasAtividade * pontosHora * 0.05;
-    console.log("Graças ao seu esforço, você faturou R$", faturamento, "reais.\nContinue assim.");
+    console.log(`Graças ao seu esforço, você faturou R$${faturamento} reais.\nContinue assim.`);
 }
 
 /**
@@ -231,15 +235,16 @@ function questao9() {
             salarioMulheres += salario;
         }
         
-        console.log("Deseja continuar?\n1 - Sim\t2 - Não");
+        console.log("Deseja continuar?\n1 - Sim\tQualquer outra tecla - Não");
         continuar = Number(input("Opção: "));
-        if (continuar == 2) {
-            break;
+        if (continuar == 1) {
+            continue;
         }
+        break;
     }
 
     console.log(
-        "O total de salário pago aos homens é:", salarioHomens,
+        "\nO total de salário pago aos homens é:", salarioHomens,
         "\nO total de salário pago às mulheres é:", salarioMulheres
     );
 }
@@ -256,7 +261,6 @@ function questao10() {
     let numero = 0;
     let somaNumeros = 0;
     let menorNumero;
-    let mediaNumeros = 0;
     let numerosPares = 0;
     let continuar = 0;
 
@@ -276,15 +280,14 @@ function questao10() {
         }
         i++;
 
-        console.log("Deseja continuar?\n1 - Sim\n2 - Não");
+        console.log("Deseja continuar?\n1 - Sim\tQualquer outra tecla - Não");
         continuar = Number(input("Opção: "));
     } while (continuar == 1)
-    mediaNumeros = somaNumeros / i;
     
     console.log(
-        "a) A soma dos números informados é:", somaNumeros +
-        "\nb) O menor número informado é:", menorNumero +
-        "\nc) A média dos números informados é:", mediaNumeros +
+        "\na) A soma dos números informados é:", somaNumeros,
+        "\nb) O menor número informado é:", menorNumero,
+        "\nc) A média dos números informados é:", (somaNumeros / i).toFixed(2),
         "\nd) A quantidade de números pares é:", numerosPares
     );
 }
@@ -387,14 +390,44 @@ function questao15() {
  * (entre 0 e 99) gerados pelo computador. Logo em seguida, mostre os números gerados e
  * depois coloque o vetor em ordem crescente, mostrando no final os valores ordenados.
  */
-function questao16() {}
+function questao16() {
+    let vetor = new Array(20);
+    let vetorOrdenado = new Array(20);
+    let numeroAleatorio = 0;
+
+    for (let i = 0; i < vetor.length; i++) {
+        numeroAleatorio = Math.floor(Math.random() * 99);
+        vetor[i] = numeroAleatorio;
+        vetorOrdenado[i] = numeroAleatorio;
+    }
+    ordenacao.bubbleSort(vetorOrdenado);
+
+    console.table(vetor);
+    console.table(vetorOrdenado);
+}
 
 /**
  * 17. Crie um programa que leia o nome e a idade de 9 pessoas e guarde esses valores em
  * dois vetores, em posições relacionadas. No final, mostre uma listagem contendo apenas
  * os dados das pessoas menores de idade.
  */
-function questao17() {}
+function questao17() {
+    let pessoas = new Array(2);
+    pessoas["nome"] = new Array(9);
+    pessoas["idade"] = new Array(9);
+
+    for (let i = 0; i < pessoas["nome"].length; i++) {
+        pessoas["nome"][i] = input("Qual o nome da pessoa? ");
+        pessoas["idade"][i] = Number(input("Qual a idade dessa pessoa? "));
+    }
+    console.table(pessoas);
+    console.log("As pessoas menores de idade são:");
+    for (let i = 0; i < pessoas["nome"].length; i++) {
+        if (pessoas["idade"][i] < 18) {
+            console.log("Nome:", pessoas["nome"][i], "\tIdade:", pessoas["idade"][i]);
+        }
+    }
+}
 
 /**
  * 18. Crie um registro com o nome do funcionário, cargo e salário. Leia este registro para
@@ -409,10 +442,10 @@ function questao18() {}
 function questao19() {}
 
 /**
- * 20. Uma indústria faz a folha mensal de pagamentos de seus 80 empregados baseada
- * no seguinte: existe uma tabela com os dados de cada funcionalidade: matrícula, nome e
- * salário bruto. Escreva um programa que leia e processe a tabela e emita (escreva na
- * tela), cada funcionário, seu contracheque, cujo formato é dado a seguir:
+ * 20. Uma indústria faz a folha mensal de pagamentos de seus 80 empregados baseada no seguinte:
+ * existe uma tabela com os dados de cada funcionalidade: matrícula, nome e salário bruto.
+ * Escreva um programa que leia e processe a tabela e emita (escreva na tela),
+ * cada funcionário, seu contracheque, cujo formato é dado a seguir:
  * Matrícula:
  * Nome:
  * Salário bruto:
@@ -423,58 +456,248 @@ function questao19() {}
 function questao20() {}
 
 /**
- * 21. Faça uma função que recebe, por parâmetro, a altura (alt) e o sexo de uma pessoa e
- * retorna o seu peso ideal. Para homens, calcular o peso ideal usando a fórmula: peso ideal
- * = 72.7 x alt - 58 e, para mulheres, peso ideal = 62.1 x alt - 44.7.
+ * 21. Faça uma função que recebe, por parâmetro, a altura (alt)
+ * e o sexo de uma pessoa e retorna o seu peso ideal.
+ * Calcular o peso ideal usando a fórmula:
+ * para homens peso ideal = 72.7 x alt - 58 e,
+ * para mulheres, peso ideal = 62.1 x alt - 44.7.
  */
-function questao21() {}
+function questao21() {
+    let pesoIdeal = 0;
+    let altura = Number(input("Informe a altura de uma pessoa: "));
+    console.log("Informe o sexo dessa pessoa:\n1 - Masculino\t2 - Feminino");
+    let sexo = Number(input("Opção: "));
+
+    if (sexo == 1) {
+        pesoIdeal = 72.7 * altura - 58;
+    } else {
+        pesoIdeal = 62.1 * altura - 44.7;
+    }
+    console.log("O peso ideal dessa pessoa é:", pesoIdeal);
+}
 
 /**
- * 22. A prefeitura de uma cidade fez uma pesquisa entre os seus habitantes, coletando
- * dados sobre o salário e número de filhos. Faça uma função que leia esses dados para um
- * número não determinado de pessoas e retorne a média de salário da população, a
- * média do número de filhos, o maior salário e o percentual de pessoas com salário até R$ 350,00.
+ * 22. A prefeitura de uma cidade fez uma pesquisa entre os seus habitantes,
+ * coletando dados sobre o salário e número de filhos.
+ * Faça uma função que leia esses dados para um número não determinado de pessoas
+ * e retorne a média de salário da população, a média do número de filhos,
+ * o maior salário e o percentual de pessoas com salário até R$ 350,00.
  */
-function questao22() {}
+function questao22() {
+    let salario = 0;
+    let filhos = 0;
+    let somaSalario = 0;
+    let somaFilhos = 0;
+    let maiorSalario;
+    let salarioMenor350 = 0;
+    let continuar = 0;
+    
+    let i = 0;
+    while (true) {
+        salario = Number(input("Qual o seu salário? "));
+        filhos = Number(input("Quantos filhos você tem? "));
+        somaSalario += salario;
+        somaFilhos += filhos;
+        if (maiorSalario === undefined) {
+            maiorSalario = salario;
+        } else {
+            if (salario > maiorSalario) {
+                maiorSalario = salario;
+            }
+        }
+        if (salario <= 350) {
+            salarioMenor350 += 1;
+        }
+        i++;
+
+        console.log("\nDeseja continuar?\n1 - Sim\tQualquer outra tecla - Não");
+        continuar = Number(input("Opção: "));
+        if (continuar == 1) {
+            continue;
+        }
+        break;
+    }
+
+    console.log(
+        "\na) A média dos salários informados é:", (somaSalario / i).toFixed(2),
+        "\nb) A média do número de filhos informados é:", (somaFilhos / i).toFixed(2),
+        "\nc) O maior salário informado é:", maiorSalario,
+        `\nd) O percentual de pessoas com salário até R$ 350,00 é: ${(salarioMenor350 / i * 100).toFixed(2)}%`
+    );
+}
 
 /**
  * 23. Criar e imprimir a matriz identidade MI[1..7,1..7] em que todos os elementos da
  * diagonal principal são iguais a 1 e os demais são nulos.
  */
-function questao23() {}
+function questao23() {
+    let matrizM = new Array(7);
+
+    for (let i = 0; i < matrizM.length; i++) {
+        matrizM[i] = new Array(7);
+        for (let j = 0; j < matrizM[i].length; j++) {
+            if (i == j) {
+                matrizM[i][j] = 1;
+            } else {
+                matrizM[i][j] = 0;
+            }
+        }
+    }
+    console.table(matrizM);
+}
 
 /**
- * 24. Dada uma matriz M[1..6,1..8], criar um vetor C que contenha, em cada posição, a
- * quantidade de elementos negativos da linha correspondente de M.
+ * 24. Dada uma matriz M[1..6,1..8], criar um vetor C que contenha, em cada posição,
+ * a quantidade de elementos negativos da linha correspondente de M.
  */
-function questao24() {}
+function questao24() {
+    let matrizM = new Array(6);
+    for (let i = 0; i < matrizM.length; i++) {
+        matrizM[i] = new Array(8);
+        for (let j = 0; j < matrizM[i].length; j++) {
+            if ((i + j) % 2 == 0) {
+                matrizM[i][j] = 0;
+            } else {
+                matrizM[i][j] = -1;
+            }
+        }
+    }
+    let vetorC = new Array(6);
+    let cont;
+    
+    for (let i = 0; i < matrizM.length; i++) {
+        cont = 0;
+        for (let j = 0; j < matrizM[i].length; j++) {
+            if (matrizM[i][j] < 0) {
+                cont++;
+            }
+        }
+        vetorC[i] = cont
+    }
+
+    console.table(matrizM);
+    console.table(vetorC);
+}
 
 /**
  * 25. Faça um algoritmo que leia uma matriz de 15 X 20 de números reais e mostre a soma
  * de cada coluna separadamente.
  */
-function questao25() {}
+function questao25() {
+    let matriz = new Array(15);
+    for (let i = 0; i < matriz.length; i++) {
+        matriz[i] = new Array(20);
+        for (let j = 0; j < matriz[i].length; j++) {
+            matriz[i][j] = Math.floor(Math.random() * 5 + 1);
+        }
+    }
+
+    let somaColunas = new Array(20);
+    for (let k = 0; k < somaColunas.length; k++) {
+        somaColunas[k] = 0;
+    }
+
+    for (let i = 0; i < matriz.length; i++) {
+        for (let j = 0; j < matriz[i].length; j++) {
+            somaColunas[j] += matriz[i][j];
+        }
+    }
+
+    console.table(matriz);
+    console.table(somaColunas);
+}
 
 /**
- * 26. Dadas duas matrizes numéricas A[1..3,1..5] e B[1..3,1..5], calcular a matriz produto
- * P[1..3,1..5].
+ * 26. Dadas duas matrizes numéricas A[1..3,1..5] e B[1..5,1..3],
+ * calcular a matriz produto P[1..3,1..3].
  */
-function questao26() {}
+function questao26() {
+    let matrizA = new Array(3);
+    for (let i = 0; i < matrizA.length; i++) {
+        matrizA[i] = new Array(5);
+        for (let j = 0; j < matrizA[i].length; j++) {
+            matrizA[i][j] = Math.floor(Math.random() * 5 + 1);
+        }
+    }
+
+    let matrizB = new Array(5);
+    for (let i = 0; i < matrizB.length; i++) {
+        matrizB[i] = new Array(3);
+        for (let j = 0; j < matrizB[i].length; j++) {
+            matrizB[i][j] = Math.floor(Math.random() * 5 + 1);
+        }
+    }
+
+    if (matrizA[0].length != matrizB.length) {
+        console.log(
+            "As matrizes não podem ser multiplicadas.\n",
+            "O número de colunas da matriz A precisa ser igual ao número de linhas da matriz B."
+        );
+        return;
+    }
+
+    let matrizP = new Array(matrizA.length);
+    for (let i = 0; i < matrizA.length; i++) {
+        matrizP[i] = new Array(matrizB[0].length);
+        for (let j = 0; j < matrizP[i].length; j++) {
+            matrizP[i][j] = 0;
+        }
+    }
+
+    for (let i = 0; i < matrizP.length; i++) {
+        for (let j = 0; j < matrizP[i].length; j++) {
+            for (let k = 0; k < matrizB.length; k++) {
+                matrizP[i][j] += (matrizA[i][k] * matrizB[k][j]); 
+            }
+        }
+    }
+
+    console.table(matrizA);
+    console.table(matrizB);
+    console.table(matrizP);
+}
 
 /**
- * 27. Elaborar um algoritmo que leia uma matriz M(6,6) e um valor A. Após a leitura,
- * multiplicar a matriz M pelo valor A e colocar os valores da matriz multiplicados por A em
- * um vetor V(36). Escrever o vetor V no final.
+ * 27. Elaborar um algoritmo que leia uma matriz M(6,6) e um valor A.
+ * Após a leitura, multiplicar a matriz M pelo valor A e
+ * colocar os valores da matriz multiplicados por A em um vetor V(36).
+ * Escrever o vetor V no final.
  */
 function questao27() {}
 
 /**
- * 28. Fazer um algoritmo para receber uma matriz 10 x 10 e devolver o resultado pedido no
- * item:
+ * 28. Fazer um algoritmo para receber uma matriz 10 x 10
+ * e devolver o resultado pedido no item:
  * a) a soma dos elementos acima da diagonal principal;
  * b) a soma dos elementos abaixo da diagonal principal;
  */
-function questao28() {}
+function questao28() {
+    let matriz = new Array(10);
+    for (let i = 0; i < matriz.length; i++) {
+        matriz[i] = new Array(10);
+        for (let j = 0; j < matriz[i].length; j++) {
+            matriz[i][j] = Math.floor(Math.random() * 5 + 1);
+        }
+    }
+    let somaAcima = 0;
+    let somaAbaixo = 0;
+
+    for (let i = 0; i < matriz.length; i++) {
+        for (let j = 0; j < matriz[i].length; j++) {
+            if (i < j) {
+                somaAcima += matriz[i][j];
+            } else if (i > j) {
+                somaAbaixo += matriz[i][j];
+            }
+        }
+    }
+
+    console.table(matriz);
+    console.log(
+        "a) A soma dos elementos acima da diagonal principal é:", somaAcima,
+        "\nb) A soma dos elementos abaixo da diagonal principal é:", somaAbaixo
+    );
+}
 
 /**
  * 29. Escreva um algoritmo que leia uma matriz M(5,5) e calcule as somas:
@@ -484,7 +707,42 @@ function questao28() {}
  * d) todos os elementos da matriz M.
  * Escrever essas somas e a matriz.
  */
-function questao29() {}
+function questao29() {
+    let matriz = new Array(5);
+    for (let i = 0; i < matriz.length; i++) {
+        matriz[i] = new Array(5);
+        for (let j = 0; j < matriz[i].length; j++) {
+            matriz[i][j] = Math.floor(Math.random() * 5 + 1);
+        }
+    }
+    let somaLinha4 = 0;
+    let somaColuna2 = 0;
+    let somaDiagonalPrincipal = 0;
+    let somaElementos = 0;
+
+    for (let i = 0; i < matriz.length; i++) {
+        for (let j = 0; j < matriz[i].length; j++) {
+            if (i == 3) {
+                somaLinha4 += matriz[i][j];
+            }
+            if (j == 1) {
+                somaColuna2 += matriz[i][j];
+            }
+            if (i == j) {
+                somaDiagonalPrincipal += matriz[i][j];
+            }
+            somaElementos += matriz[i][j];
+        }
+    }
+
+    console.table(matriz);
+    console.log(
+        "a) A soma dos elementos da linha 4 é:", somaLinha4,
+        "\nb) A soma dos elementos da coluna 2 é:", somaColuna2,
+        "\nc) A soma dos elementos da diagonal principal é:", somaDiagonalPrincipal,
+        "\nd) A soma de todos os elementos é:", somaElementos
+    );
+}
 
 /**
  * 30. Escrever um algoritmo que lê uma matriz M(5,5) e cria 2 vetores SL(5) e SC(5) que
@@ -502,8 +760,8 @@ function questao31() {}
 
 /**
  * 32. Escrever um algoritmo que lê uma matriz M(12,13) e divida todos os 13 elementos de
- * cada uma das 12 linhas de M pelo maior elemento em módulo daquela linha. Escrever a
- * matriz lida e a modificada.
+ * cada uma das 12 linhas de M pelo maior elemento em módulo daquela linha.
+ * Escrever a matriz lida e a modificada.
  */
 function questao32() {}
 
@@ -514,9 +772,9 @@ function questao32() {}
 function questao33() {}
 
 /**
- * 34. Faça um algoritmo que leia uma matriz 50 x 50 de números reais. A seguir, multiplique
- * cada linha pelo elemento da diagonal principal daquela linha. Mostre a matriz após as
- * multiplicações.
+ * 34. Faça um algoritmo que leia uma matriz 50 x 50 de números reais.
+ * A seguir, multiplique cada linha pelo elemento da diagonal principal daquela linha.
+ * Mostre a matriz após as multiplicações.
  */
 function questao34() {}
 
@@ -680,7 +938,7 @@ function questao50() {}
 // questao7();
 // questao8();
 // questao9();
-questao10();
+// questao10();
 // questao11();
 // questao12();
 // questao13();
