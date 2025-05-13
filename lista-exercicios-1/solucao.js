@@ -7,7 +7,7 @@ const input = require("prompt-sync")();
  * utilizando uma estrutura de controle if.
  */
 function questao1() {
-    let numero = Number(input("Informe um número inteiro: "));
+    const numero = Number(input("Informe um número inteiro: "));
     
     if (numero % 2 == 0) {
         console.log("O número é par.");
@@ -22,7 +22,7 @@ function questao1() {
  * controle if-else.
  */
 function questao2() {
-    let idade = Number(input("Informe a idade da pessoa: "));
+    const idade = Number(input("Informe a idade da pessoa: "));
     let classificacao = "";
 
     if (idade <= 13) {
@@ -34,6 +34,7 @@ function questao2() {
     } else {
         classificacao = "idosa";
     }
+
     console.log("Essa pessoa é", classificacao);
 }
 
@@ -42,7 +43,7 @@ function questao2() {
  * "Aprovado", "Recuperação", ou "Reprovado" utilizando if-else if.
  */
 function questao3() {
-    let nota = Number(input("Informe a nota do aluno (de 0 a 10): "));
+    const nota = Number(input("Informe a nota do aluno (de 0 a 10): "));
     let situacao = "";
 
     if (nota >= 7) {
@@ -52,6 +53,7 @@ function questao3() {
     } else {
         situacao = "reprovado";
     }
+
     console.log("A situação do aluno é:", situacao);
 }
 
@@ -65,7 +67,7 @@ function questao3() {
         "1 - Classificador de par ou ímpar\n" + 
         "2 - Classificador de idade\n" + 
         "3 - Classificador de nota");
-    let opcao = input("Escolha uma opção: ");
+    const opcao = input("Escolha uma opção: ");
     switch (opcao) {
         case "1":
             questao1();
@@ -87,9 +89,9 @@ function questao3() {
  * utilizando if-else.
  */
 function questao5() {
-    let altura = Number(input("Informe a altura da pessoa em m: "));
-    let peso = Number(input("Informe o peso da pessoa em kg: "));
-    let imc = peso / (altura * altura);
+    const altura = Number(input("Informe a altura da pessoa em m: "));
+    const peso = Number(input("Informe o peso da pessoa em kg: "));
+    const imc = peso / (altura * altura);
     let categoria = "";
 
     if (imc <= 18.5) {
@@ -101,6 +103,7 @@ function questao5() {
     } else {
         categoria = "obesidade";
     }
+
     console.log("A pessoa possui", categoria);
 }
 
@@ -115,23 +118,27 @@ function questao5() {
  */
 function questao6() {
     console.log("Informe os valores dos lados de um triângulo.");
-    let ladoA = Number(input("Lado A: "));
-    let ladoB = Number(input("Lado B: "));
-    let ladoC = Number(input("Lado C: "));
+    const ladoA = Number(input("Lado A: "));
+    const ladoB = Number(input("Lado B: "));
+    const ladoC = Number(input("Lado C: "));
     let classificacao = "";
 
-    if (!((ladoA < (ladoB + ladoC)) && (ladoB < (ladoA + ladoC)) && (ladoC < (ladoA + ladoB)))) {
+    if ((ladoA < (ladoB + ladoC)) &&
+        (ladoB < (ladoA + ladoC)) &&
+        (ladoC < (ladoA + ladoB))) {
+        if (ladoA == ladoB && ladoB == ladoC) {
+            classificacao = "equilátero";
+        } else if (ladoA == ladoB || ladoA == ladoC || ladoB == ladoC) {
+            classificacao = "isósceles";
+        } else {
+            classificacao = "escaleno";
+        }
+    } else {
         console.log("Os lados não formam um triângulo.");
         return;
     }
-    if ((ladoA == ladoB) && (ladoB == ladoC)) {
-        classificacao = "equilátero";
-    } else if ((ladoA == ladoB) || (ladoA == ladoC) || (ladoB == ladoC)) {
-        classificacao = "isósceles";
-    } else {
-        classificacao = "escaleno";
-    }
-    console.log("O triângulo é", classificacao)
+
+    console.log("O triângulo é", classificacao);
 }
 
 /**
@@ -140,12 +147,13 @@ function questao6() {
  * compradas, calcule e escreva o valor total da compra.
  */
 function questao7() {
-    let quantidadeMacas = Number(input("Informe a quantidade de maçãs compradas: "));
+    const quantidadeMacas = Number(input("Informe a quantidade de maçãs compradas: "));
     let precoMaca = 0.25;
 
     if (quantidadeMacas < 12) {
         precoMaca = 0.3;
     }
+
     console.log("O preço total das maçãs é:", quantidadeMacas * precoMaca);
 }
 
@@ -154,8 +162,8 @@ function questao7() {
  * e escreve-los em ordem crescente.
  */
 function questao8() {
-    let numero1 = Number(input("Informe um número: "));
-    let numero2 = Number(input("Informe outro número diferente do primeiro: "));
+    const numero1 = Number(input("Informe um número: "));
+    const numero2 = Number(input("Informe outro número diferente do primeiro: "));
 
     if (numero1 < numero2) {
         console.log("Os números informados foram:", numero1, numero2);
@@ -178,7 +186,7 @@ function questao9() {
  * 10. Escreva um algoritmo para ler um número inteiro e escrevê-lo na tela 10 vezes.
  */
 function questao10() {
-    let numero = Number(input("Informe um número: "));
+    const numero = Number(input("Informe um número: "));
     
     for (let i = 0; i < 10; i++) {
         console.log(numero);
@@ -196,6 +204,7 @@ function questao11() {
         numero = Number(input("Informe um número: "));
         somaNumeros += numero;
     }
+
     console.log("A soma dos números informados é:", somaNumeros);
 }
 
@@ -204,7 +213,7 @@ function questao11() {
  * de 1 a 10) utilizando um loop for.
  */
  function questao12() {
-    let numero = Number(input("Informe um número: "));
+    const numero = Number(input("Informe um número: "));
 
     for (let i = 1; i < 11; i++) {
         console.log(
@@ -221,22 +230,27 @@ function questao11() {
  */
 function questao13() {
     let numero = 0;
+    let somaNumeros = 0;
     let qtdNumeros = 0;
-    let soma = 0;
 
     while (true) {
-        numero = Number(input("Informe um número (ou digite 0 para encerrar): "))
+        numero = Number(input("Informe um número decimal (ou digite 0 para encerrar): "))
         if (numero == 0) {
             break;
         }
-        soma += numero;
+        if (numero % 1 == 0) {
+            console.log("O número é inteiro. Por favor, informe um número decimal.");
+            continue;
+        }
+        somaNumeros += numero;
         qtdNumeros++;
     }
     // Para evitar divisão por 0.
     if (qtdNumeros == 0) {
         qtdNumeros++;
     }
-    console.log("A média dos números informados é:", soma / qtdNumeros);
+
+    console.log("A média dos números informados é:", somaNumeros / qtdNumeros);
 }
 
 /**
@@ -244,13 +258,14 @@ function questao13() {
  * utilizando um loop for ou while.
  */
 function questao14() {
-    let numero = Number(input("Informe um número: "));
+    const numero = Number(input("Informe um número: "));
     let fatorial = 1;
     
     while (numero > 1) {
         fatorial *= numero;
         numero--;
     }
+
     console.log("O fatorial desse número é:", fatorial);
 }
 
@@ -265,6 +280,7 @@ function questao15() {
     
     console.log(penultimo);
     console.log(ultimo);
+
     for (let i = 2; i < 10; i++) {
         atual = ultimo + penultimo;
         console.log(atual);
