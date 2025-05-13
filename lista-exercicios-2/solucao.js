@@ -2,6 +2,29 @@
 const input = require("prompt-sync")();
 const ordenacao = require("../algoritmos/ordenacao");
 
+/**
+ * Cria uma matriz linhas x colunas preenchida com números aleatórios entre 1 e valorMaximo (5 por padrão).  
+ * Se apenas linhas for informado, será criada uma matriz quadrada linhas x linhas.
+ * @param {Number} linhas 
+ * @param {Number} colunas 
+ * @param {number} valorMaximo 
+ * @returns {Array} matriz
+ */
+function criarMatriz(linhas, colunas=undefined, valorMaximo=5) {
+    if (colunas === undefined) {
+        colunas = linhas;
+    }
+
+    const matriz = new Array(linhas);
+    for (let i = 0; i < matriz.length; i++) {
+        matriz[i] = new Array(colunas);
+        for (let j = 0; j < matriz[i].length; j++) {
+            matriz[i][j] = Math.floor(Math.random() * valorMaximo + 1);
+        }
+    }
+    return matriz;
+}
+
 
 /**
  * 1. Escreva um programa para calcular a redução do tempo de vida de um fumante.
@@ -10,11 +33,10 @@ const ordenacao = require("../algoritmos/ordenacao");
  * Calcule quantos dias de vida um fumante perderá e exiba o total em dias.
  */
 function questao1() {
-    let tempoFumanteAnos = Number(input("Há quantos anos você fuma? "));
-    let cigarrosPorDia = Number(input("Quantos cigarros você fuma por dia? "));
-
-    let totalCigarros = tempoFumanteAnos * 365 * cigarrosPorDia;
-    let tempoPerdidoDias = totalCigarros * 10 / (24 * 60);
+    const tempoFumanteAnos = Number(input("Há quantos anos você fuma? "));
+    const cigarrosPorDia = Number(input("Quantos cigarros você fuma por dia? "));
+    const totalCigarros = tempoFumanteAnos * 365 * cigarrosPorDia;
+    const tempoPerdidoDias = totalCigarros * 10 / (24 * 60);
 
     console.log("O cigarro já custou", tempoPerdidoDias.toFixed(2), "dias da sua vida.\nPare de fumar.");
 }
@@ -25,8 +47,8 @@ function questao1() {
  * Nesse caso, exiba o valor da multa, cobrando R$ 5,00 por cada Km acima da velocidade permitida.
  */
 function questao2() {
-    let velocidade = Number(input("Qual a velocidade do carro em Km/h? "));
-    let valorInfracao = 5;
+    const velocidade = Number(input("Qual a velocidade do carro em Km/h? "));
+    const valorInfracao = 5;
     let valorMulta = 0;
 
     if (velocidade > 80) {
@@ -46,7 +68,7 @@ function questao2() {
  * R$ 0.45 para viagens mais longas.
  */
 function questao3() {
-    let distancia = Number(input("Qual a distância da corrida em Km? "));
+    const distancia = Number(input("Qual a distância da corrida em Km? "));
     let precoQuilometro = 0.5;
     let precoPassagem = 0;
 
@@ -66,14 +88,16 @@ function questao3() {
  */
 function questao4() {
     console.log("Informe os valores dos lados de um triângulo.");
-    let ladoA = Number(input("Lado A: "));
-    let ladoB = Number(input("Lado B: "));
-    let ladoC = Number(input("Lado C: "));
+    const ladoA = Number(input("Lado A: "));
+    const ladoB = Number(input("Lado B: "));
+    const ladoC = Number(input("Lado C: "));
 
-    if (!((ladoA < (ladoB + ladoC)) && (ladoB < (ladoA + ladoC)) && (ladoC < (ladoA + ladoB)))) {
-        console.log("Os lados não formam um triângulo.");
-    } else {
+    if ((ladoA < (ladoB + ladoC)) &&
+        (ladoB < (ladoA + ladoC)) &&
+        (ladoC < (ladoA + ladoB))) {
         console.log("Os lados formam um triângulo.");
+    } else {
+        console.log("Os lados não formam um triângulo.");
     }
 }
 
@@ -94,13 +118,18 @@ function questao5() {
             console.log("Opção inválida!");
             continue;
         }
-
         escolhaComputador = Math.floor(Math.random() * 3 + 1);
+
         console.log(
             "Jo...\tKen...\tPo!\n",
             "Sua escolha:", opcoes[escolhaUsuario - 1],
             "\tEscolha do computador:", opcoes[escolhaComputador - 1]
         );
+
+        // Como pedra (1) deve ganhar de tesoura (3),
+        // para satisfazer a condição de vitória (maior índice ganha) seus índices devem ser trocados.
+        // Assim, pedra (3) ganha de tesoura (1).
+        // Nos demais casos: papel (2) ganha de pedra (1), e tesoura (3) ganha de papel (2).
         if ((escolhaUsuario == 1 && escolhaComputador == 3) ||
             (escolhaUsuario == 3 && escolhaComputador == 1)) {
             temp = escolhaUsuario;
@@ -109,10 +138,10 @@ function questao5() {
         }
         if (escolhaUsuario > escolhaComputador) {
             console.log("Parabéns, você ganhou!");
-        } else if (escolhaUsuario == escolhaComputador) {
-            console.log("Você empatou com o computador.");
-        } else {
+        } else if (escolhaUsuario < escolhaComputador) {
             console.log("Que pena, você perdeu.");
+        } else {
+            console.log("Você empatou com o computador.");
         }
 
         console.log("\nDeseja jogar novamente?\n1 - Sim\tQualquer outra tecla - Não");
@@ -129,8 +158,8 @@ function questao5() {
  * O jogador vai tentar descobrir qual foi o valor sorteado.
  */
 function questao6() {
-    let numeroSorteado = Math.floor(Math.random() * 5 + 1);
-    let escolha = Number(input("Um número entre 1 e 5 foi sorteado, qual número você acha que é? "));
+    const numeroSorteado = Math.floor(Math.random() * 5 + 1);
+    const escolha = Number(input("Um número entre 1 e 5 foi sorteado, qual número você acha que é? "));
 
     if (escolha == numeroSorteado) {
         console.log("Parabéns, você acertou!");
@@ -155,9 +184,9 @@ function questao6() {
  */
 function questao7() {
     console.log("Qual o tipo de carro alugado?\n1 - Carro popular\t2 - Carro de luxo");
-    let tipoCarro = Number(input("Opção: "));
-    let diasAluguel = Number(input("Qual a quantidade de dias de aluguel? "));
-    let distanciaPercorrida = Number(input("Qual a distância percorrida pelo carro em Km? "));
+    const tipoCarro = Number(input("Opção: "));
+    const diasAluguel = Number(input("Qual a quantidade de dias de aluguel? "));
+    const distanciaPercorrida = Number(input("Qual a distância percorrida pelo carro em Km? "));
     let diariaAluguel = 0;
     let precoQuilometro = 0;
     let valorAluguel = 0;
@@ -195,7 +224,7 @@ function questao7() {
  * Calcule e mostre quantos pontos ela teve e quanto dinheiro ela conseguiu ganhar.
  */
 function questao8() {
-    let horasAtividade = Number(input("Quantas horas de atividade física você realizou nesse mês? "));
+    const horasAtividade = Number(input("Quantas horas de atividade física você realizou nesse mês? "));
     let pontosHora = 0;
     let faturamento = 0;
 
@@ -262,9 +291,9 @@ function questao10() {
     let somaNumeros = 0;
     let menorNumero;
     let numerosPares = 0;
+    let qtdNumeros = 0;
     let continuar = 0;
 
-    let i = 0;
     do {
         numero = Number(input("Informe um número: "));
         somaNumeros += numero;
@@ -278,7 +307,7 @@ function questao10() {
         if (numero % 2 == 0) {
             numerosPares++;
         }
-        i++;
+        qtdNumeros++;
 
         console.log("Deseja continuar?\n1 - Sim\tQualquer outra tecla - Não");
         continuar = Number(input("Opção: "));
@@ -287,7 +316,7 @@ function questao10() {
     console.log(
         "\na) A soma dos números informados é:", somaNumeros,
         "\nb) O menor número informado é:", menorNumero,
-        "\nc) A média dos números informados é:", (somaNumeros / i).toFixed(2),
+        "\nc) A média dos números informados é:", (somaNumeros / qtdNumeros).toFixed(2),
         "\nd) A quantidade de números pares é:", numerosPares
     );
 }
@@ -299,7 +328,7 @@ function questao10() {
  */
 function questao11() {
     const primeiroTermo = Number(input("Informe o primeiro termo da PA: "));
-    let razao = Number(input("Informe a razão da PA: "));
+    const razao = Number(input("Informe a razão da PA: "));
     let proximoTermo = primeiroTermo;
     let somaTermos = 0;
     
@@ -309,6 +338,7 @@ function questao11() {
         somaTermos += proximoTermo;
         proximoTermo += razao;
     }
+
     console.log("A soma dos 10 primeiros termos é:", somaTermos);
 }
 
@@ -323,6 +353,7 @@ function questao12() {
     
     console.log(penultimo);
     console.log(ultimo);
+
     for (let i = 2; i < 10; i++) {
         atual = ultimo + penultimo;
         console.log(atual);
@@ -337,13 +368,14 @@ function questao12() {
  * da sequência de Fibonacci.
  */
 function questao13() {
-    let fibo = new Array(15);
+    const fibo = new Array(15);
     fibo[0] = 0;
     fibo[1] = 1;
 
     for (let i = 2; i < fibo.length; i++) {
         fibo[i] = fibo[i - 1] + fibo[i - 2];
     }
+
     console.log(fibo);
 }
 
@@ -353,11 +385,12 @@ function questao13() {
  * que eles foram informados.
  */
 function questao14() {
-    let nomes = new Array(7);
+    const nomes = new Array(7);
 
     for (let i = 0; i < nomes.length; i++) {
         nomes[i] = input("Informe o nome de uma pessoa: ");
     }
+
     console.log("Os nomes informados, na ordem inversa, foram:");
     for (let i = nomes.length - 1; i > -1; i--) {
         console.log(nomes[i]);
@@ -370,17 +403,17 @@ function questao14() {
  * e em que posições eles estão armazenados.
  */
 function questao15() {
-    let numeros = new Array(10);
-    let numero = 0;
+    const numeros = new Array(10);
 
     for (let i = 0; i < 10; i++) {
         numeros[i] = Number(input("Informe um número: "));
     }
+
     console.log("Os seguintes números informados são pares e suas respectivas posições de armazenamento são:");
     for (let i = 0; i < numeros.length; i++) {
-        numero = numeros[i]
-        if (numero % 2 == 0) {
-            console.log("número:", numero, "\tposição:", i);
+        numeros[i] = numeros[i]
+        if (numeros[i] % 2 == 0) {
+            console.log("número:", numeros[i], "\tposição:", i);
         }
     }
 }
@@ -391,12 +424,14 @@ function questao15() {
  * depois coloque o vetor em ordem crescente, mostrando no final os valores ordenados.
  */
 function questao16() {
-    let vetor = new Array(20);
-    let vetorOrdenado = new Array(20);
+    const vetor = new Array(20);
+    // Outro vetor é criado pois o Bubble Sort não retorna um vetor ordenado,
+    // realiza a ordenação no vetor utilizado como argumento.
+    const vetorOrdenado = new Array(20);
     let numeroAleatorio = 0;
 
     for (let i = 0; i < vetor.length; i++) {
-        numeroAleatorio = Math.floor(Math.random() * 99);
+        numeroAleatorio = Math.floor(Math.random() * 100);
         vetor[i] = numeroAleatorio;
         vetorOrdenado[i] = numeroAleatorio;
     }
@@ -412,7 +447,7 @@ function questao16() {
  * os dados das pessoas menores de idade.
  */
 function questao17() {
-    let pessoas = new Array(2);
+    const pessoas = new Array(2);
     pessoas["nome"] = new Array(9);
     pessoas["idade"] = new Array(9);
 
@@ -421,6 +456,7 @@ function questao17() {
         pessoas["idade"][i] = Number(input("Qual a idade dessa pessoa? "));
     }
     console.table(pessoas);
+
     console.log("As pessoas menores de idade são:");
     for (let i = 0; i < pessoas["nome"].length; i++) {
         if (pessoas["idade"][i] < 18) {
@@ -463,16 +499,17 @@ function questao20() {}
  * para mulheres, peso ideal = 62.1 x alt - 44.7.
  */
 function questao21() {
-    let pesoIdeal = 0;
-    let altura = Number(input("Informe a altura de uma pessoa: "));
+    const altura = Number(input("Informe a altura de uma pessoa: "));
     console.log("Informe o sexo dessa pessoa:\n1 - Masculino\t2 - Feminino");
-    let sexo = Number(input("Opção: "));
+    const sexo = Number(input("Opção: "));
+    let pesoIdeal = 0;
 
     if (sexo == 1) {
         pesoIdeal = 72.7 * altura - 58;
     } else {
         pesoIdeal = 62.1 * altura - 44.7;
     }
+
     console.log("O peso ideal dessa pessoa é:", pesoIdeal);
 }
 
@@ -490,9 +527,9 @@ function questao22() {
     let somaFilhos = 0;
     let maiorSalario;
     let salarioMenor350 = 0;
+    let qtdPessoas = 0;
     let continuar = 0;
-    
-    let i = 0;
+
     while (true) {
         salario = Number(input("Qual o seu salário? "));
         filhos = Number(input("Quantos filhos você tem? "));
@@ -508,7 +545,7 @@ function questao22() {
         if (salario <= 350) {
             salarioMenor350 += 1;
         }
-        i++;
+        qtdPessoas++;
 
         console.log("\nDeseja continuar?\n1 - Sim\tQualquer outra tecla - Não");
         continuar = Number(input("Opção: "));
@@ -519,10 +556,10 @@ function questao22() {
     }
 
     console.log(
-        "\na) A média dos salários informados é:", (somaSalario / i).toFixed(2),
-        "\nb) A média do número de filhos informados é:", (somaFilhos / i).toFixed(2),
+        "\na) A média dos salários informados é:", (somaSalario / qtdPessoas).toFixed(2),
+        "\nb) A média do número de filhos informados é:", (somaFilhos / qtdPessoas).toFixed(2),
         "\nc) O maior salário informado é:", maiorSalario,
-        `\nd) O percentual de pessoas com salário até R$ 350,00 é: ${(salarioMenor350 / i * 100).toFixed(2)}%`
+        `\nd) O percentual de pessoas com salário até R$ 350,00 é: ${(salarioMenor350 / qtdPessoas * 100).toFixed(2)}%`
     );
 }
 
@@ -531,8 +568,7 @@ function questao22() {
  * diagonal principal são iguais a 1 e os demais são nulos.
  */
 function questao23() {
-    let matrizM = new Array(7);
-
+    const matrizM = new Array(7);
     for (let i = 0; i < matrizM.length; i++) {
         matrizM[i] = new Array(7);
         for (let j = 0; j < matrizM[i].length; j++) {
@@ -551,28 +587,31 @@ function questao23() {
  * a quantidade de elementos negativos da linha correspondente de M.
  */
 function questao24() {
-    let matrizM = new Array(6);
+    let numeroAleatorio = 0;
+    const matrizM = new Array(6);
     for (let i = 0; i < matrizM.length; i++) {
         matrizM[i] = new Array(8);
         for (let j = 0; j < matrizM[i].length; j++) {
-            if ((i + j) % 2 == 0) {
+            // Lógica para preencher aleatoriamente a matriz com números positivos e negativos.
+            numeroAleatorio = Math.floor(Math.random() * 2);  // Gera 0 ou 1.
+            if (numeroAleatorio == 0) {
                 matrizM[i][j] = 0;
             } else {
                 matrizM[i][j] = -1;
             }
         }
     }
-    let vetorC = new Array(6);
-    let cont;
+    const vetorC = new Array(matrizM.length);
+    let contNegativos;
     
     for (let i = 0; i < matrizM.length; i++) {
-        cont = 0;
+        contNegativos = 0;
         for (let j = 0; j < matrizM[i].length; j++) {
             if (matrizM[i][j] < 0) {
-                cont++;
+                contNegativos++;
             }
         }
-        vetorC[i] = cont
+        vetorC[i] = contNegativos
     }
 
     console.table(matrizM);
@@ -583,16 +622,8 @@ function questao24() {
  * 25. Faça um algoritmo que leia uma matriz de 15 X 20 de números reais e mostre a soma
  * de cada coluna separadamente.
  */
-function questao25() {
-    let matriz = new Array(15);
-    for (let i = 0; i < matriz.length; i++) {
-        matriz[i] = new Array(20);
-        for (let j = 0; j < matriz[i].length; j++) {
-            matriz[i][j] = Math.floor(Math.random() * 5 + 1);
-        }
-    }
-
-    let somaColunas = new Array(20);
+function questao25(matriz) {
+    const somaColunas = new Array(matriz[0].length);
     for (let k = 0; k < somaColunas.length; k++) {
         somaColunas[k] = 0;
     }
@@ -611,23 +642,7 @@ function questao25() {
  * 26. Dadas duas matrizes numéricas A[1..3,1..5] e B[1..5,1..3],
  * calcular a matriz produto P[1..3,1..3].
  */
-function questao26() {
-    let matrizA = new Array(3);
-    for (let i = 0; i < matrizA.length; i++) {
-        matrizA[i] = new Array(5);
-        for (let j = 0; j < matrizA[i].length; j++) {
-            matrizA[i][j] = Math.floor(Math.random() * 5 + 1);
-        }
-    }
-
-    let matrizB = new Array(5);
-    for (let i = 0; i < matrizB.length; i++) {
-        matrizB[i] = new Array(3);
-        for (let j = 0; j < matrizB[i].length; j++) {
-            matrizB[i][j] = Math.floor(Math.random() * 5 + 1);
-        }
-    }
-
+function questao26(matrizA, matrizB) {
     if (matrizA[0].length != matrizB.length) {
         console.log(
             "As matrizes não podem ser multiplicadas.\n",
@@ -636,7 +651,7 @@ function questao26() {
         return;
     }
 
-    let matrizP = new Array(matrizA.length);
+    const matrizP = new Array(matrizA.length);
     for (let i = 0; i < matrizA.length; i++) {
         matrizP[i] = new Array(matrizB[0].length);
         for (let j = 0; j < matrizP[i].length; j++) {
@@ -671,14 +686,7 @@ function questao27() {}
  * a) a soma dos elementos acima da diagonal principal;
  * b) a soma dos elementos abaixo da diagonal principal;
  */
-function questao28() {
-    let matriz = new Array(10);
-    for (let i = 0; i < matriz.length; i++) {
-        matriz[i] = new Array(10);
-        for (let j = 0; j < matriz[i].length; j++) {
-            matriz[i][j] = Math.floor(Math.random() * 5 + 1);
-        }
-    }
+function questao28(matriz) {
     let somaAcima = 0;
     let somaAbaixo = 0;
 
@@ -707,14 +715,7 @@ function questao28() {
  * d) todos os elementos da matriz M.
  * Escrever essas somas e a matriz.
  */
-function questao29() {
-    let matriz = new Array(5);
-    for (let i = 0; i < matriz.length; i++) {
-        matriz[i] = new Array(5);
-        for (let j = 0; j < matriz[i].length; j++) {
-            matriz[i][j] = Math.floor(Math.random() * 5 + 1);
-        }
-    }
+function questao29(matriz) {
     let somaLinha4 = 0;
     let somaColuna2 = 0;
     let somaDiagonalPrincipal = 0;
@@ -749,34 +750,100 @@ function questao29() {
  * contenham, respectivamente, as somas das linhas e das colunas de M. Escrever a matriz
  * e os vetores criados.
  */
-function questao30() {}
+function questao30(matriz) {
+    const somaLinhas = new Array(matriz.length);
+    for (let k = 0; k < somaLinhas.length; k++) {
+        somaLinhas[k] = 0;
+    }
+    const somaColunas = new Array(matriz[0].length);
+    for (let k = 0; k < somaColunas.length; k++) {
+        somaColunas[k] = 0;
+    }
+
+    for (let i = 0; i < matriz.length; i++) {
+        for (let j = 0; j < matriz[i].length; j++) {
+            somaLinhas[i] += matriz[i][j];
+            somaColunas[j] += matriz[i][j];
+        }
+    }
+
+    console.table(matriz);
+    console.table(somaLinhas);
+    console.table(somaColunas);
+}
 
 /**
- * 31. Escreva um algoritmo que leia um número inteiro A e uma matriz V 30 x 30 de inteiros.
+ * 31. Escreva um algoritmo que leia um número inteiro A e uma matriz V 10 x 10 de inteiros.
  * Conte quantos valores iguais a A estão na matriz. Crie, a seguir, uma matriz X contendo
  * todos os elementos de V diferentes de A. Mostre os resultados.
  */
-function questao31() {}
+function questao31(matriz) {
+    const numero = Number(input("Informe um número inteiro de 1 a 5: "));
+    let qtdElementosIguais = 0;
+
+    const matrizDiff = new Array(matriz.length);
+    for (let i = 0; i < matrizDiff.length; i++) {
+        matrizDiff[i] = new Array(matriz.length);
+        for (let j = 0; j < matriz[i].length; j++) {
+            if (matriz[i][j] != numero) {
+                matrizDiff[i][j] = matriz[i][j];
+            } else {
+                qtdElementosIguais++;
+            }
+        }
+    }
+
+    console.log("A quantidade de elementos na matriz iguais ao número informado é,", qtdElementosIguais);
+    console.table(matriz);
+    console.table(matrizDiff);
+}
 
 /**
  * 32. Escrever um algoritmo que lê uma matriz M(12,13) e divida todos os 13 elementos de
  * cada uma das 12 linhas de M pelo maior elemento em módulo daquela linha.
  * Escrever a matriz lida e a modificada.
  */
-function questao32() {}
+function questao32(matriz) {}
 
 /**
  * 33. Faça um algoritmo que leia uma matriz 3 x 3 e após a leitura, multiplique os
  * elementos da diagonal principal com a média dos elementos da diagonal secundária.
  */
-function questao33() {}
+function questao33(matriz) {
+    let somaDiagonalSecundaria = 0;
+    let mediaDiagonalSecundaria = 0;
+
+    for (let i = 0; i < matriz.length; i++) {
+        somaDiagonalSecundaria += matriz[i][matriz[i].length - 1 - i];
+    }
+    mediaDiagonalSecundaria = somaDiagonalSecundaria / matriz.length;
+    console.log(mediaDiagonalSecundaria);
+
+    console.table(matriz);
+    for (let i = 0; i < matriz.length; i++) {
+        matriz[i][i] *= mediaDiagonalSecundaria;
+    }
+    console.table(matriz)
+}
 
 /**
- * 34. Faça um algoritmo que leia uma matriz 50 x 50 de números reais.
+ * 34. Faça um algoritmo que leia uma matriz 10 x 10 de números reais.
  * A seguir, multiplique cada linha pelo elemento da diagonal principal daquela linha.
  * Mostre a matriz após as multiplicações.
  */
-function questao34() {}
+function questao34(matriz) {
+    console.table(matriz);
+    for (let i = 0; i < matriz.length; i++) {
+        // Se o elemento for 1, a multiplicação não altera os valores dos elementos.
+        if (matriz[i][i] == 1) {
+            continue;
+        }
+        for (let j = 0; j < matriz[i].length; j++) {
+            matriz[i][j] *= matriz[i][i];
+        }
+    }
+    console.table(matriz);
+}
 
 /**
  * 35. Elaborar um algoritmo que leia um conjunto de 30 valores e os coloca em 2 vetores
@@ -953,16 +1020,16 @@ function questao50() {}
 // questao22();
 // questao23();
 // questao24();
-// questao25();
-// questao26();
+// questao25(criarMatriz(15, 20));
+// questao26(criarMatriz(3, 5), criarMatriz(5, 3));
 // questao27();
-// questao28();
-// questao29();
-// questao30();
-// questao31();
-// questao32();
-// questao33();
-// questao34();
+// questao28(criarMatriz(10));
+// questao29(criarMatriz(5));
+// questao30(criarMatriz(5));
+// questao31(criarMatriz(10));
+// questao32(criarMatriz(12, 13));
+// questao33(criarMatriz(3));
+// questao34(criarMatriz(10));
 // questao35();
 // questao36();
 // questao37();
