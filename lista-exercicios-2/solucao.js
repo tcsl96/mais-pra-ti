@@ -469,7 +469,16 @@ function questao17() {
  * 18. Crie um registro com o nome do funcionário, cargo e salário. Leia este registro para
  * um funcionário e ao final escreva o conteúdo do registro.
  */
-function questao18() {}
+function questao18() {
+    const funcionarios = new Array(1);
+    funcionarios[0] = new Array();
+
+    funcionarios[0]["nome"] = input("Informe o nome de um funcionário: ");
+    funcionarios[0]["cargo"] = input("Qual o cargo desse funcionário? ");
+    funcionarios[0]["salario"] = Number(input("Qual o salário desse funcionário? "));
+
+    console.log(funcionarios[0]);
+}
 
 /**
  * 19. Escrever um programa para ler 5 horários. Validar cada horário fornecendo através de
@@ -489,7 +498,31 @@ function questao19() {}
  * Salário líquido:
  * (Dicas: desconto de 12%, salário líquido é a diferença entre salário bruto e a redução do INSS).
  */
-function questao20() {}
+function questao20() {
+    // Criando registro de 6 funcionários apenas como exemplo.
+    const matriculas = [1, 2, 3, 4, 5, 6];
+    const nomes = ["Arthur", "Davi", "Thyago", "Cauan", "Renan", "Pedro"];
+    const salarios = [3000, 1100, 2000, 2200, 2750, 1100];
+
+    const funcionarios = new Array(6);
+    for (let i = 0; i < funcionarios.length; i++) {
+        funcionarios[i] = new Array();
+
+        funcionarios[i]["matricula"] = matriculas[i];
+        funcionarios[i]["nome"] = nomes[i];
+        funcionarios[i]["salario"] = salarios[i];
+    }
+    
+    funcionarios.forEach(funcionario => {
+        console.log(
+            "Matricula:", funcionario.matricula,
+            "\tNome:", funcionario.nome,
+            "\tSalário bruto:", funcionario.salario,
+            "\tDedução INSS:", funcionario.salario * 0.12,
+            "\tSalário líquido:", funcionario.salario * 0.88
+        );
+    });
+}
 
 /**
  * 21. Faça uma função que recebe, por parâmetro, a altura (alt)
@@ -678,7 +711,20 @@ function questao26(matrizA, matrizB) {
  * colocar os valores da matriz multiplicados por A em um vetor V(36).
  * Escrever o vetor V no final.
  */
-function questao27() {}
+function questao27(matriz) {
+    const numero = Number(input("Informe um número: "));
+    const vetorV = new Array(matriz.length * matriz[0].length);
+
+    console.table(matriz);
+    for (let i = 0; i < matriz.length; i++) {
+        for (let j = 0; j < matriz[i].length; j++) {
+            matriz[i][j] *= numero;
+            vetorV[i * matriz[i].length + j] = matriz[i][j];
+        }
+    }
+    console.table(matriz);
+    console.log(vetorV);
+}
 
 /**
  * 28. Fazer um algoritmo para receber uma matriz 10 x 10
@@ -783,8 +829,8 @@ function questao31(matriz) {
 
     const matrizDiff = new Array(matriz.length);
     for (let i = 0; i < matrizDiff.length; i++) {
-        matrizDiff[i] = new Array(matriz.length);
-        for (let j = 0; j < matriz[i].length; j++) {
+        matrizDiff[i] = new Array(matriz[0].length);
+        for (let j = 0; j < matrizDiff[i].length; j++) {
             if (matriz[i][j] != numero) {
                 matrizDiff[i][j] = matriz[i][j];
             } else {
@@ -803,7 +849,28 @@ function questao31(matriz) {
  * cada uma das 12 linhas de M pelo maior elemento em módulo daquela linha.
  * Escrever a matriz lida e a modificada.
  */
-function questao32(matriz) {}
+function questao32(matriz) {
+    let maiorElemento = 0;
+    let elemento = 0;
+
+    console.table(matriz);
+    for (let i = 0; i < matriz.length; i++) {
+        maiorElemento = matriz[i][0];
+        for (let j = 1; j < matriz[i].length; j++) {
+            elemento = matriz[i][j];
+            if (elemento < 0) {
+                elemento *= -1;
+            }
+            if (elemento > maiorElemento) {
+                maiorElemento = elemento;
+            }
+        }
+        for (let k = 0; k < matriz[i].length; k++) {
+            matriz[i][k] /= maiorElemento;
+        }
+    }
+    console.table(matriz);
+}
 
 /**
  * 33. Faça um algoritmo que leia uma matriz 3 x 3 e após a leitura, multiplique os
@@ -848,10 +915,43 @@ function questao34(matriz) {
 /**
  * 35. Elaborar um algoritmo que leia um conjunto de 30 valores e os coloca em 2 vetores
  * conforme forem pares ou ímpares. O tamanho do vetor é de 5 posições. Se algum vetor
- * estiver cheio, escrevê-lo. Terminada a leitura, escrever o conteúdo dos dois vetores. Cada
- * vetor pode ser preenchido quantas vezes forem necessárias.
+ * estiver cheio, escrevê-lo. Terminada a leitura, escrever o conteúdo dos dois vetores.
+ * Cada vetor pode ser preenchido quantas vezes forem necessárias.
  */
-function questao35() {}
+function questao35() {
+    const pares = new Array(5);
+    const impares = new Array(5);
+    let numeroAleatorio = 0;
+    let indice = 0;
+
+    function limparArray(array) {
+        for (let i = 0; i < array.length; i++) {
+            array[i] = undefined;
+        }
+    }
+
+    for (let i = 0; i < 30; i++) {
+        numeroAleatorio = Math.floor(Math.random() * 5 + 1)  // Gera de 1 a 5.
+        if (numeroAleatorio % 2 == 0) {
+            indice = pares.findIndex((elemento) => elemento === undefined);
+            pares[indice] = numeroAleatorio;
+            if (indice == pares.length - 1) {
+                console.log("Pares:", pares);
+                limparArray(pares);
+            }
+        } else {
+            indice = impares.findIndex((elemento) => elemento === undefined);
+            impares[indice] = numeroAleatorio;
+            if (indice == impares.length - 1) {
+                console.log("Ímpares:", impares);
+                limparArray(impares);
+            }
+        }
+    }
+
+    console.log("Pares:", pares);
+    console.log("Ímpares", impares);
+}
 
 /**
  * 36. Escreva um algoritmo que leia um vetor de 13 elementos inteiros, que é o Gabarito de
@@ -1014,7 +1114,7 @@ function questao50() {}
 // questao16();
 // questao17();
 // questao18();
-// questao19();
+// questao19();  // FAZER
 // questao20();
 // questao21();
 // questao22();
@@ -1022,7 +1122,7 @@ function questao50() {}
 // questao24();
 // questao25(criarMatriz(15, 20));
 // questao26(criarMatriz(3, 5), criarMatriz(5, 3));
-// questao27();
+// questao27(criarMatriz(6));
 // questao28(criarMatriz(10));
 // questao29(criarMatriz(5));
 // questao30(criarMatriz(5));
@@ -1031,18 +1131,18 @@ function questao50() {}
 // questao33(criarMatriz(3));
 // questao34(criarMatriz(10));
 // questao35();
-// questao36();
-// questao37();
-// questao38();
-// questao39();
-// questao40();
-// questao41();
-// questao42();
-// questao43();
-// questao44();
-// questao45();
-// questao46();
-// questao47();
-// questao48();
-// questao49();
-// questao50();
+// questao36();  // FAZER
+// questao37();  // FAZER
+// questao38();  // FAZER
+// questao39();  // FAZER
+// questao40();  // FAZER
+// questao41();  // FAZER
+// questao42();  // FAZER
+// questao43();  // FAZER
+// questao44();  // FAZER
+// questao45();  // FAZER
+// questao46();  // FAZER
+// questao47();  // FAZER
+// questao48();  // FAZER
+// questao49();  // FAZER
+// questao50();  // FAZER
