@@ -6,7 +6,37 @@ const input = require("prompt-sync")();
  * 1. Crie a função ehDataValida(dia, mes, ano) que retorne true se os valores formarem uma data real  
  * (meses de 28–31 dias, ano bissexto para fevereiro) e false caso contrário.
  */
-function questao1() {}
+function questao1(dia, mes, ano) {
+    function ehBissexto(ano) {
+        if (ano % 400 == 0) {
+            return true;
+        } else if (ano % 4 == 0) {
+            if (ano % 100 != 0) { return true; }
+        }
+        return false;
+    }
+
+    const meses30 = [4, 6, 9, 11];  // Abr, Jun, Set, Nov
+
+    if (mes < 1 || mes > 12) { return false; }
+    if (dia < 1 || dia > 31) { return false; }
+
+    if (meses30.includes(mes)) {
+        if (dia <= 30) { return true; }
+        return false;
+    }
+
+    if (mes == 2) {  // Fev
+        if (ehBissexto(ano)) {
+            if (dia <= 29) { return true; }
+        } else {
+            if (dia <= 28) { return true; }
+        }
+        return false;
+    }
+
+    return true;
+}
 
 /**
  * 2. Escreva um script que gere um número aleatório de 1 a 100 e peça ao usuário, para adivinhar.  
@@ -74,13 +104,60 @@ function questao3(string="olá olá mundo mundo") {
  * 5. Crie function debounce(fn, delay) que receba uma função fn e um delay em ms,  
  * retornando uma nova função que só executa fn se não for chamada novamente dentro do intervalo.
  */
-function questao5() {}
+function questao5() {
+    function debounce(fn, delay) {
+        let timeoutId;
+
+        return function(...args) {
+            const context = this;
+
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => {
+                fn.apply(context, args);
+            }, delay);
+        };
+    }
+
+    function buscar(query) {
+        console.log("Buscando:", query);
+    }
+
+    const buscarDebounced = debounce(buscar, 300);
+
+    buscarDebounced("a");     // Cancelado
+    buscarDebounced("ab");    // Cancelado
+    buscarDebounced("abc");   // Última chamada - após 300ms, executa: "Buscando: abc"
+}
 
 /**
  * 6. Implemente function memoize(fn) que armazene em cache chamadas anteriores de fn (por argumentos),  
  * retornando resultados instantâneos em repetidas invocações.
  */
-function questao6() {}
+function questao6() {
+    function memoize(fn) {
+        const cache = new Map();
+
+        return function(...args) {
+            const key = JSON.stringify(args);
+            
+            if (cache.has(key)) {
+                return cache.get(key);
+            }
+    
+            const result = fn.apply(this, args);
+            cache.set(key, result);
+            return result;
+        }
+    }
+
+    function fatorial(n) {
+        if (n == 1) { return n; }
+        return n * fastFatorial(n - 1);
+    }
+
+    const fastFatorial = memoize(fatorial);
+    console.log(fastFatorial(5));
+}
 
 /**
  * 7. Dado um array produtos = [{ nome, preco }, …],  
@@ -150,7 +227,7 @@ function questao9() {
     console.log(objetoParaPares(objeto));
 }
 
-// questao1();
+// console.log(questao1(29, 2, 2000));
 // questao2();
 // questao3("olá olá mundo mundo hello world");
 // console.log(questao4(5));
