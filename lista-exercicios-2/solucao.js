@@ -13,26 +13,23 @@ function questao1(dia, mes, ano) {
         } else if (ano % 4 == 0) {
             if (ano % 100 != 0) { return true; }
         }
+
         return false;
     }
 
-    const meses30 = [4, 6, 9, 11];  // Abr, Jun, Set, Nov
+    const mesesTrintaDias = [4, 6, 9, 11];  // Abr, Jun, Set, Nov
 
     if (mes < 1 || mes > 12) { return false; }
     if (dia < 1 || dia > 31) { return false; }
 
-    if (meses30.includes(mes)) {
-        if (dia <= 30) { return true; }
-        return false;
-    }
-
-    if (mes == 2) {  // Fev
+    if (mesesTrintaDias.includes(mes)) {
+        if (dia > 30) { return false; }
+    } else if (mes == 2) {  // Fev
         if (ehBissexto(ano)) {
-            if (dia <= 29) { return true; }
+            if (dia > 29) { return false; }
         } else {
-            if (dia <= 28) { return true; }
+            if (dia > 28) { return false; }
         }
-        return false;
     }
 
     return true;
