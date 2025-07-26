@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .flex-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .grid-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, auto);
+            justify-content: center;
+        }
+
+        .gallery-item > figure {
+            justify-items: center;
+        }
+
+        img {
+            display: block;
+            width: 200px;
+            height: 200px;
+        }
+
+        figcaption {
+            text-align: center;
+            font-style: italic;
+        }
+
+        @media (max-width: 935px) {
+            .grid-gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 628px) {
+            .grid-gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- <div class="flex-wrapper"> -->
+        <div class="grid-gallery">
+            <div class="gallery-item">
+                <figure>
+                    <p>Dark Magician</p>
+                    <img src="./img/Dark Magician.jpg" alt="Dark Magician">
+                    <figcaption>The ultimate wizard in terms of attack and defense.</figcaption>
+                </figure>
+            </div>
+            <div class="gallery-item">
+                <figure>
+                    <p>Dark Magician Girl</P>
+                    <img src="./img/Dark Magician Girl.jpg" alt="Dark Magician Girl">
+                    <figcaption>
+                        A beautiful female counterpart to the male Dark Magician.
+                        She powers up if there is a Dark Magician in the graveyard.
+                    </figcaption>
+                </figure>
+            </div>
+            <div class="gallery-item">
+                <figure>
+                    <p>Kuriboh</P>
+                    <img src="./img/Kuriboh.jpg" alt="Kuriboh">
+                    <figcaption>A fun-loving creature that is useful in battles with its defensive capabilities.</figcaption>
+                </figure>
+            </div>
+            <div class="gallery-item">
+                <figure>
+                    <p>Red-Eyes Black Dragon</P>
+                    <img src="./img/Red-Eyes Black Dragon.jpg" alt="Red-Eyes Black Dragon">
+                    <figcaption>A ferocious dragon with a deadly attack.</figcaption>
+                </figure>
+            </div>
+            <div class="gallery-item">
+                <figure>
+                    <p>Baby Dragon</P>
+                    <img src="./img/Baby Dragon.jpg" alt="Baby Dragon">
+                    <figcaption>Much more than just a child, this dragon is gifted with untapped power.</figcaption>
+                </figure>
+            </div>
+            <div class="gallery-item">
+                <figure>
+                    <p>Time Wizard</P>
+                    <img src="./img/Time Wizard.jpg" alt="Time Wizard">
+                    <figcaption>An enchanted clock that has the power to transform Baby Dragon and Dark Magician on the player's own field.</figcaption>
+                </figure>
+            </div>
+            <div class="gallery-item">
+                <figure>
+                    <p>Blue-Eyes White Dragon</P>
+                    <img src="./img/Blue-Eyes White Dragon.jpg" alt="Blue-Eyes White Dragon">
+                    <figcaption>
+                        This legendary dragon is a powerful engine of destruction.
+                        Virtually invincible, very few have faced this awesome creature and lived to tell the tale.</figcaption>
+                </figure>
+            </div>
+            <div class="gallery-item">
+                <figure>
+                    <p>Blue-Eyes Ultimate Dragon</P>
+                    <img src="./img/Blue-Eyes Ultimate Dragon.jpg" alt="Blue-Eyes Ultimate Dragon">
+                    <figcaption>
+                        The ultimate of all dragons has three awe-inspiring heads.
+                        It is formed by the fusion of three Blue-Eyes White Dragon.
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+    <!-- </div> -->
+</body>
+</html>
